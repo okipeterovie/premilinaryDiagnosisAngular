@@ -1,0 +1,6 @@
+<div class="spinner-border" [ngClass]="classes" role="status" *ngIf="isLoading && !isButton">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<span class="spinner-border spinner-border-sm" [ngClass]="classes" role="status" aria-hidden="true"
+    *ngIf="isLoading && isButton"></span>

@@ -1,0 +1,121 @@
+<div class="text text-center">
+    <button type="submit" class="btn btn-primary" (click)="newDiagnosis = !newDiagnosis">
+      <span *ngIf="newDiagnosis"> Search </span>
+      <span *ngIf="!newDiagnosis"> New </span>
+      Diagnosis
+    </button>
+</div>
+<br/>
+
+<div *ngIf="newDiagnosis">
+  <form [formGroup]="diagnosisForm" (ngSubmit)="submitDiagnosisForm()" novalidate
+        *ngIf="diagnosis.length==0">
+    <fieldset>
+      <div class="row">
+        <div class="col-6">
+          <legend>Select Year of birth</legend>
+          <div class="mb-3">
+            <select id="years" class="form-select" formControlName="yearOfBirth">
+              <option disabled selected>--</option>
+              <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <legend>Select Gender</legend>
+          <div class="mb-3">
+            <select id="gender" class="form-select" formControlName="gender">
+              <option disabled selected>--</option>
+              <option *ngFor="let gender of genders" value="{{gender}}">{{gender}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <legend>
+        Select Symptoms
+      </legend>
+
+      <p class="bg-danger text-white"
+         *ngIf="this.diagnosisForm.controls['symptomsId'].errors?.['required']">
+        Checkbox is required, select at least one value.
+      </p>
+      <div class="row m-2">
+        <div class="col-4 form-check" *ngFor="let symptom of symptoms; let i=index">
+          <input type="checkbox" class="form-check-input" [value]="symptom?.id" (change)="onSymptomsCheckboxChange($event)" />
+          <label class="form-check-label">
+            {{symptom?.name}}
+          </label>
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-primary" [disabled]="diagnosisForm.invalid">Submit</button>
+    </fieldset>
+  </form>
+  <form [formGroup]="saveDiagnosisForm" (ngSubmit)="submitSaveDiagnosisForm()" novalidate
+        *ngIf="diagnosis.length > 0">
+    <fieldset>
+
+      <div class="row">
+        <div class="col-6">
+          <legend>Select Year of birth</legend>
+          <div class="mb-3">
+            <select id="diagnosis" class="form-select" formControlName="diagnosis">
+              <option disabled selected>--</option>
+              <option *ngFor="let data of diagnosis" value="{{data?.id}}">{{data.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <legend>Identifier</legend>
+          <div class="mb-3">
+            <input type="text" formControlName="identifier" class="form-control" id="identifier"
+                   placeholder="Identifier">
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="saveDiagnosisForm.invalid">Submit</button>
+    </fieldset>
+  </form>
+</div>
+
+<div *ngIf="!newDiagnosis">
+
+  <form [formGroup]="searchDiagnosisForm" (ngSubmit)="submitSearchDiagnosisForm()" novalidate>
+    <fieldset>
+
+      <div class="row">
+        <div class="col-6">
+          <legend>Identifier</legend>
+          <div class="mb-3">
+            <input type="text" formControlName="identifier" class="form-control"
+                   id="exisitngIdentifier"
+                   placeholder="Existing Identifier">
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="searchDiagnosisForm.invalid">Submit</button>
+    </fieldset>
+  </form>
+
+  <div *ngIf="existingDiagnosis!=null">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Ranking</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row">{{existingDiagnosis?.id}}</th>
+        <td>{{existingDiagnosis?.name}}</td>
+        <td>{{existingDiagnosis?.ranking}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

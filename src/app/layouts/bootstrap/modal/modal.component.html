@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title" *ngIf="enableTitleButton">{{modalTitle}}</h4>
+    <button *ngIf="enableHeaderCloseButton" type="button" class="close" aria-label="Close"
+        (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    {{modalBody}}
+</div>
+
+<div class="modal-footer">
+    {{modalFooter}}
+    <button *ngIf="enableCloseButton" ngbAutofocus type="button"
+        [ngClass]="closeButtonStyle ? closeButtonStyle : 'btn-danger'" class="btn "
+        (click)="activeModal.close('Close click')">Ok</button>
+</div>

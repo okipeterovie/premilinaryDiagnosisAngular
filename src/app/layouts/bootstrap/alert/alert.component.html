@@ -1,0 +1,5 @@
+<p *ngFor="let alert of alertService.alerts">
+  <ngb-alert [type]="alert.type" (close)="alertService.close(alert)" [dismissible]="alert.dismissible">
+      {{ alert.message }}
+  </ngb-alert>
+</p>
